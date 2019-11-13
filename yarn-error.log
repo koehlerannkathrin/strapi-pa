@@ -1,0 +1,63 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js install
+
+PATH: 
+  /usr/local/sbin:/Users/ann-kathrin/.rbenv/shims:/Users/ann-kathrin/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/Users/ann-kathrin/.rbenv/bin
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  10.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: ENOSPC: no space left on device, write
+
+npm manifest: 
+  {
+    "name": "strapi",
+    "private": true,
+    "version": "0.1.0",
+    "description": "A Strapi application",
+    "scripts": {
+      "develop": "strapi develop",
+      "start": "strapi start",
+      "build": "strapi build",
+      "strapi": "strapi"
+    },
+    "devDependencies": {},
+    "dependencies": {
+      "strapi": "3.0.0-beta.17.5",
+      "strapi-admin": "3.0.0-beta.17.5",
+      "strapi-utils": "3.0.0-beta.17.5",
+      "strapi-plugin-content-type-builder": "3.0.0-beta.17.5",
+      "strapi-plugin-content-manager": "3.0.0-beta.17.5",
+      "strapi-plugin-users-permissions": "3.0.0-beta.17.5",
+      "strapi-plugin-email": "3.0.0-beta.17.5",
+      "strapi-plugin-upload": "3.0.0-beta.17.5",
+      "strapi-hook-bookshelf": "3.0.0-beta.17.5",
+      "strapi-hook-knex": "3.0.0-beta.17.5",
+      "knex": "latest",
+      "sqlite3": "latest"
+    },
+    "author": {
+      "name": "A Strapi developer"
+    },
+    "strapi": {
+      "uuid": "5eec5f2d-8c73-4517-b5e5-2cc320393f33"
+    },
+    "engines": {
+      "node": ">=10.0.0",
+      "npm": ">=6.0.0"
+    },
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

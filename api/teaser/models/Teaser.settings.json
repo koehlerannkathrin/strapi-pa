@@ -1,0 +1,39 @@
+{
+  "connection": "default",
+  "collectionName": "beschreibungs",
+  "info": {
+    "name": "teaser",
+    "description": "Beschreibung hinzufügen"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "headline": {
+      "required": true,
+      "type": "string"
+    },
+    "content": {
+      "type": "text"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload"
+    },
+    "author": {
+      "model": "user",
+      "via": "teaser",
+      "plugin": "users-permissions"
+    },
+    "groups": {
+      "collection": "group",
+      "via": "teaser"
+    }
+  }
+}

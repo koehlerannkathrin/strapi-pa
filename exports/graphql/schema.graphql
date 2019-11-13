@@ -1,0 +1,408 @@
+input createGroupInput {
+  data: GroupInput
+}
+
+type createGroupPayload {
+  group: Group
+}
+
+input createInfoInput {
+  data: InfoInput
+}
+
+type createInfoPayload {
+  info: Info
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createTeaserInput {
+  data: TeaserInput
+}
+
+type createTeaserPayload {
+  teaser: Teaser
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""
+The `DateTime` scalar represents a date and time following the ISO 8601 standard
+"""
+scalar DateTime
+
+input deleteGroupInput {
+  where: InputID
+}
+
+type deleteGroupPayload {
+  group: Group
+}
+
+input deleteInfoInput {
+  where: InputID
+}
+
+type deleteInfoPayload {
+  info: Info
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+input deleteTeaserInput {
+  where: InputID
+}
+
+type deleteTeaserPayload {
+  teaser: Teaser
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input editFileInput {
+  name: String
+  hash: String
+  sha256: String
+  ext: String
+  mime: String
+  size: String
+  url: String
+  provider: String
+  provider_metadata: JSON
+  related: [ID]
+}
+
+input editGroupInput {
+  name: String
+  image: ID
+  teaser: ID
+  description: String
+}
+
+input editInfoInput {
+  headline: String
+  decriptioin: String
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input editTeaserInput {
+  headline: String
+  content: String
+  image: ID
+  author: ID
+  groups: [ID]
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  teaser: ID
+}
+
+input FileInput {
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  provider_metadata: JSON
+  related: [ID]
+}
+
+"""Weiterleitung Gruppe"""
+type Group {
+  name: String!
+  image: UploadFile
+  teaser: Teaser
+  description: String
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input GroupInput {
+  name: String!
+  image: ID
+  teaser: ID
+  description: String
+}
+
+type Info {
+  headline: String
+  decriptioin: String
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input InfoInput {
+  headline: String
+  decriptioin: String
+}
+
+input InputID {
+  id: ID!
+}
+
+scalar JSON
+
+"""The `Long` scalar type represents 52-bit integers"""
+scalar Long
+
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | Group | createGroupPayload | updateGroupPayload | deleteGroupPayload | Info | createInfoPayload | updateInfoPayload | deleteInfoPayload | Teaser | createTeaserPayload | updateTeaserPayload | deleteTeaserPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+
+type Mutation {
+  createGroup(input: createGroupInput): createGroupPayload
+  updateGroup(input: updateGroupInput): updateGroupPayload
+  deleteGroup(input: deleteGroupInput): deleteGroupPayload
+  createInfo(input: createInfoInput): createInfoPayload
+  updateInfo(input: updateInfoInput): updateInfoPayload
+  deleteInfo(input: deleteInfoInput): deleteInfoPayload
+  createTeaser(input: createTeaserInput): createTeaserPayload
+  updateTeaser(input: updateTeaserInput): updateTeaserPayload
+  deleteTeaser(input: deleteTeaserInput): deleteTeaserPayload
+
+  """Create a new role"""
+  createRole(input: createRoleInput): createRolePayload
+
+  """Update an existing role"""
+  updateRole(input: updateRoleInput): updateRolePayload
+
+  """Delete an existing role"""
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+
+  """Create a new user"""
+  createUser(input: createUserInput): createUserPayload
+
+  """Update an existing user"""
+  updateUser(input: updateUserInput): updateUserPayload
+
+  """Delete an existing user"""
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  upload(refId: ID, ref: String, field: String, source: String, file: Upload!): UploadFile!
+  multipleUpload(refId: ID, ref: String, field: String, source: String, files: [Upload]!): [UploadFile]!
+  login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
+  register(input: UserInput!): UsersPermissionsLoginPayload!
+}
+
+type Query {
+  group(id: ID!): Group
+  groups(sort: String, limit: Int, start: Int, where: JSON): [Group]
+  info(id: ID!): Info
+  infos(sort: String, limit: Int, start: Int, where: JSON): [Info]
+  teaser(id: ID!): Teaser
+  teasers(sort: String, limit: Int, start: Int, where: JSON): [Teaser]
+  files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  role(id: ID!): UsersPermissionsRole
+
+  """
+  Retrieve all the existing roles. You can't apply filters on this query.
+  """
+  roles(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsRole]
+  user(id: ID!): UsersPermissionsUser
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  me: UsersPermissionsMe
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+"""Beschreibung hinzufügen"""
+type Teaser {
+  headline: String!
+  content: String
+  image: UploadFile
+  author: UsersPermissionsUser
+  groups(sort: String, limit: Int, start: Int, where: JSON): [Group]
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input TeaserInput {
+  headline: String!
+  content: String
+  image: ID
+  author: ID
+  groups: [ID]
+}
+
+input updateGroupInput {
+  where: InputID
+  data: editGroupInput
+}
+
+type updateGroupPayload {
+  group: Group
+}
+
+input updateInfoInput {
+  where: InputID
+  data: editInfoInput
+}
+
+type updateInfoPayload {
+  info: Info
+}
+
+input updateRoleInput {
+  where: InputID
+  data: editRoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateTeaserInput {
+  where: InputID
+  data: editTeaserInput
+}
+
+type updateTeaserPayload {
+  teaser: Teaser
+}
+
+input updateUserInput {
+  where: InputID
+  data: editUserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UploadFile {
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  provider_metadata: JSON
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  teaser: ID
+}
+
+input UsersPermissionsLoginInput {
+  identifier: String!
+  password: String!
+  provider: String = "local"
+}
+
+type UsersPermissionsLoginPayload {
+  jwt: String!
+  user: UsersPermissionsUser!
+}
+
+type UsersPermissionsMe {
+  id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+  id: ID!
+}
+
+type UsersPermissionsRole {
+  name: String!
+  description: String
+  type: String
+  permissions(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsPermission]
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  id: ID!
+}
+
+type UsersPermissionsUser {
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+  teaser: Teaser
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
